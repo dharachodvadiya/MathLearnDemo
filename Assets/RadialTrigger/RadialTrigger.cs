@@ -6,25 +6,20 @@ using UnityEngine;
 //Create Radial Trigger
 public class RadialTrigger : MonoBehaviour
 {
-    public Transform A, B;
-
-    public float aLength;
+    public Transform Player;
+    float Radius = 1;
 
     private void OnDrawGizmos()
     {
         //Gizmos.DrawSphere(transform.position, 0.1f);
-        Vector2 a = A.position;
-        Vector2 b = B.position;
 
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(default, a);
-        
+        Gizmos.DrawWireSphere(transform.position, Radius);
 
-        aLength = Mathf.Sqrt((a.x * a.x) + (a.y * a.y));
+        Vector2 center = transform.position;
 
-        float bLength = Mathf.Sqrt((b.x * b.x) + (b.y * b.y));
+        float dist = Vector2.Distance(center, Player.position);
 
-        if(bLength <= aLength)
+        if(dist <= Radius)
         {
             Gizmos.color = Color.green;
         }
@@ -33,10 +28,6 @@ public class RadialTrigger : MonoBehaviour
             Gizmos.color = Color.red;
         }
 
-        
-        Gizmos.DrawLine(default, b);
-
-
-
+        Gizmos.DrawLine(center, Player.position);
     }
 }
