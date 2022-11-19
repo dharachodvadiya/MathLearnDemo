@@ -7,27 +7,28 @@ using UnityEngine;
 public class RadialTrigger : MonoBehaviour
 {
     public Transform Player;
-    float Radius = 1;
+    public float Radius = 1;
 
     private void OnDrawGizmos()
     {
-        //Gizmos.DrawSphere(transform.position, 0.1f);
+        Vector3 center = transform.position;
+        Vector3 playerPos = Player.position;
 
-        Gizmos.DrawWireSphere(transform.position, Radius);
+        Vector3 d = center - playerPos;
 
-        Vector2 center = transform.position;
+        //float dist = d.magnitude;
+        //float dist = Vector3.Distance(center, playerPos);
 
-        float dist = Vector2.Distance(center, Player.position);
+        //float sqrtDist = ((d.x * d.x) + (d.y * d.y) + (d.z * d.z));
+        float sqrtDist = Vector3.Dot(d,d);
 
-        if(dist <= Radius)
-        {
-            Gizmos.color = Color.green;
-        }
-        else
-        {
-            Gizmos.color = Color.red;
-        }
+        
+        //bool inSide = dist <= Radius;
+        bool inSide = sqrtDist <= Radius * Radius;
+        Gizmos.color = inSide ? Color.green : Color.red;
 
-        Gizmos.DrawLine(center, Player.position);
+
+        Gizmos.DrawWireSphere(center, Radius);
+
     }
 }
